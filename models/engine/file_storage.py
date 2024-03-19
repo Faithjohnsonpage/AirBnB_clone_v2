@@ -11,7 +11,7 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         filtered_objects = {}
-        if cls:
+        if cls is not None:
             for key, value in FileStorage.__objects.items():
                 if key.startswith(cls.__name__):
                     filtered_objects[key] = value
@@ -33,7 +33,7 @@ class FileStorage:
 
     def delete(self, obj=None):
         """Deletes obj from __objects if it's inside"""
-        if obj:
+        if obj is not None:
             key_to_delete = None
             for key, value in FileStorage.__objects.items():
                 if value == obj:
