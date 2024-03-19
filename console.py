@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
                     value = value.replace('"', '\"')
 
                 attribute_pairs[key] = value
-        
+
             new_instance = HBNBCommand.classes[class_name]()
             for key, value in attribute_pairs.items():
                 if key in HBNBCommand.types:
@@ -219,7 +219,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -351,6 +351,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
