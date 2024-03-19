@@ -46,9 +46,7 @@ class FileStorage:
                     key_to_delete = key
                     break
             if key_to_delete:
-                print("Deleting object:", obj)
                 del FileStorage.__objects[key_to_delete]
-                print("Object deleted successfully")
         self.save()
 
     def reload(self):
