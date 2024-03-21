@@ -23,3 +23,17 @@ class Place(BaseModel, Base):
 
     cities = relationship("City", back_populates="places")
     user = relationship("User", back_populates="places")
+
+    reviews = relationship("Review", back_populates="place",
+        cascade="all, delete, delete-orphan")
+
+    @property
+    def reviews(self):
+        """Returns the list of Review instances with place_id equals
+        to the current Place.id"""
+        list_reviews = []
+        from models import storage
+        for review in storage.all(Review).values():
+            if review.place_id == self.id:
+                list_reviews.append(review)
+        return list_reviews
