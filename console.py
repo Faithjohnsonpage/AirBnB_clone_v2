@@ -127,6 +127,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
+        new_instance = HBNBCommand.classes[class_name]()
+
         if object_args:
             object_pairs = object_args.split()
             attribute_pairs = {}
@@ -143,15 +145,13 @@ class HBNBCommand(cmd.Cmd):
 
                 attribute_pairs[key] = value
 
-                new_instance = HBNBCommand.classes[class_name]()
+            for key, value in attribute_pairs.items():
                 if key in HBNBCommand.types:
                     try:
                         value = HBNBCommand.types[key](value)
                     except ValueError:
                         continue
                 setattr(new_instance, key, value)
-        else:
-            new_instance = HBNBCommand.classes[class_name]()
 
         storage.new(new_instance)
         storage.save()
