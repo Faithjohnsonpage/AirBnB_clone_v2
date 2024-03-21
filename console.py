@@ -145,12 +145,17 @@ class HBNBCommand(cmd.Cmd):
 
             new_instance = HBNBCommand.classes[class_name]()
             for key, value in attribute_pairs.items():
+                if key == 'description' or key == 'longitude' or key == 'latitude':
+                    setattr(new_instance, key, value)
+                    print(f"{key} attribute set directly: {getattr(new_instance, key)}")
                 if key in HBNBCommand.types:
                     try:
                         value = HBNBCommand.types[key](value)
+                        print(f"{key} attribute converted to type: {value}")
                     except ValueError:
                         continue
                 setattr(new_instance, key, value)
+                print(f"Final value of {key} attribute: {getattr(new_instance, key)}")
         else:
             new_instance = HBNBCommand.classes[class_name]()
 
