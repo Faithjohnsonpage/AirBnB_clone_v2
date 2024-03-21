@@ -143,7 +143,7 @@ class HBNBCommand(cmd.Cmd):
 
                 attribute_pairs[key] = value
 
-            new_instance = HBNBCommand.classes[class_name]()
+                new_instance = HBNBCommand.classes[class_name]()
                 if key in HBNBCommand.types:
                     try:
                         value = HBNBCommand.types[key](value)
