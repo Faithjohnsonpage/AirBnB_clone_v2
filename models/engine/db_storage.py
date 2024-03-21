@@ -9,6 +9,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+from models.user import User
 
 
 class DBStorage():
@@ -16,7 +17,7 @@ class DBStorage():
     __engine = None
     __session = None
 
-    classes = [State, City] # Amenity, Place, Review]
+    classes = [State, City, User, Place] # Amenity, Review]
 
     def __init__(self):
         """Instantiates the DBStorage class"""
