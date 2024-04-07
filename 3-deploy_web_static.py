@@ -11,6 +11,7 @@ env.hosts = ['34.207.63.80', '54.208.120.30']
 env.user = 'ubuntu'
 env.key = '~/.ssh/id_rsa'
 
+
 def do_pack():
     """Create a compressed archive (.tgz) of the web_static folder.
     Returns:
@@ -30,6 +31,7 @@ def do_pack():
         return filename
     except Exception as e:
         return None
+
 
 def do_deploy(archive_path):
     """Distributes an archive to your web servers"""
@@ -65,6 +67,7 @@ def do_deploy(archive_path):
         return True
     except Exception as e:
         return False
+
 
 def deploy():
     """Deploy function"""
