@@ -11,6 +11,7 @@ env.hosts = ['34.207.63.80', '54.208.120.30']
 env.user = 'ubuntu'
 env.key = '~/.ssh/id_rsa'
 
+
 def do_deploy(archive_path):
     """Distributes an archive to your web servers"""
     # Check if `archive_path` exists
@@ -21,21 +22,26 @@ def do_deploy(archive_path):
         # upload archive
         put(archive_path, '/tmp/')
 
-        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-        folder = f"/data/web_static/releases/web_static_{timestamp}"
+        # create target dir
+        timestamp = archive_path[-18:-4]
+        folder = f'/data/web_static/releases/web_static_{timestamp}'
+        run(f'sudo mkdir -p {folder}/')
+        # uncompress archive and delete .tgz
+        run(f'sudo tar -xzf /tmp/web_static_{timestamp}.tgz -C {folder}/')
 
-        # Create target directory if it doesn't exist
-        run(f'mkdir -p {folder}')
+        # remove archive
+        run(f'sudo rm /tmp/web_static_{timestamp}.tgz')
 
-        # Uncompress archive
-        run(f'tar -xzvf /tmp/{archive_path} -C {folder}')
-        # Remove uploaded archive
-        run(f'rm /tmp/{archive_path}')
+        # move contents into host web_static
+        run(f'sudo mv {folder}/web_static/* {folder}/')
+
+        # remove extraneous web_static dir
+        run(f'sudo rm -rf {folder}/web_static')
 
         # Remove the existing symbolic link
-        run('rm -rf /data/web_static/current')
+        run('sudo rm -rf /data/web_static/current')
         # Create a new symbolic link
-        run(f'ln -sf {folder} /data/web_static/current')
+        run(f'sudo ln -s {folder}/ /data/web_static/current')
 
         return True
     except Exception as e:
