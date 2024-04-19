@@ -22,6 +22,8 @@ def hbnb():
 @app.route('/c/<text>', strict_slashes=False)
 def C(text):
     # display “C ” followed by the value of the text variable
+    if '_' in text:
+        text = text.replace('_', ' ')
     return f"C {escape(text)}"
 
 
