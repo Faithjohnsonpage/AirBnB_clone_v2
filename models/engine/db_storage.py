@@ -17,7 +17,7 @@ class DBStorage():
     __engine = None
     __session = None
 
-    classes = [State, City, User, Place, Review] # Amenity
+    classes = [State, City, User, Place, Review, Amenity]
 
     def __init__(self):
         """Instantiates the DBStorage class"""
@@ -73,9 +73,6 @@ class DBStorage():
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(Session)
 
-        # Query and populate the session with existing objects
-        for cls in self.classes:
-            query = self.__session.query(cls).all()
-            for obj in query:
-                key = "{}.{}".format(cls.__name__, obj.id)
-                self.__session.add(obj)
+    def close(self):
+        """Close the database session."""
+        self.__session.remove()
