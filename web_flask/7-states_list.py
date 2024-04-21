@@ -20,7 +20,7 @@ def states_list():
 
 
 @app.teardown_appcontext
-def close_session(exception=None):
+def close_session(self):
     storage.close()
 
 
